@@ -97,17 +97,32 @@ export async function GET(ctx: FastworkerContext) {
 In **monolith mode**, this is a zero-latency direct function call.
 In **microservices mode**, this automatically becomes a Service Binding call (Cloudflare) or HTTP fetch (Node.js).
 
-## 6. Build & Run
+## 6. Run & Build
+
+### Running in Development (with Hot Reload)
+
+During development, start the local development server by running:
 
 ```bash
-# Build the project
-npx fastworker build
-
-# Run locally
-npx wrangler dev          # Cloudflare adapter
-# or
-node dist/index.js        # Node.js adapter
+npm run dev
 ```
+
+This command runs `fastworker dev` under the hood, which starts the server with **automatic file watching (hot reload)**. Any changes you make to your handler files in the `modules/` directory or configuration files will trigger an instant incremental build. You do **not** need to manually restart the dev server to see your updates.
+
+- **Cloudflare adapter**: Starts the local Wrangler emulator with hot reload.
+- **Node.js adapter**: Binds and runs lightweight local HTTP servers for your services.
+
+### Building for Production
+
+To compile and bundle your application for production deployment, run:
+
+```bash
+npm run build
+```
+
+This compiles your TypeScript/JavaScript files, resolves path mappings, optimizes routing tables, and generates optimized production bundles inside the `dist/` directory:
+- **Monolith mode**: Generates a single entry file (`dist/index.js`).
+- **Microservices mode**: Generates separate directories containing the gateway and individual service workers (e.g., `dist/gateway`, `dist/account_service`, `dist/billing_service`).
 
 ## 7. Test Your Routes
 
