@@ -96,7 +96,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} fastworker.`,
+      copyright: `Copyright © ${new Date().getFullYear()} fastworker contributors. Licensed under MIT.`,
     },
     prism: {
       theme: prismThemes.github,
