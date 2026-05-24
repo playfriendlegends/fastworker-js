@@ -60,7 +60,7 @@ const config: Config = {
           position: 'right',
         },
         {
-          href: 'https://www.npmjs.com/package/fastworker',
+          href: 'https://www.npmjs.com/package/fastworker-js',
           label: 'NPM',
           position: 'right',
         },
@@ -91,12 +91,12 @@ const config: Config = {
             },
             {
               label: 'NPM',
-              href: 'https://www.npmjs.com/package/fastworker',
+              href: 'https://www.npmjs.com/package/fastworker-js',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} fastworker. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} fastworker.`,
     },
     prism: {
       theme: prismThemes.github,
