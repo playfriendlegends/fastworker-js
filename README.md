@@ -4,6 +4,9 @@
 
 Build modular APIs with strict file-system routing (Next.js App Router style), type-safe cross-module RPC, and flexible deployment — from a single monolith to fully isolated microservices — on Cloudflare Workers, Node.js, or any WinterCG-compatible runtime.
 
+- **Website & Documentation**: [https://fastworker.dev](https://fastworker.dev) (Fallback: [https://playfriendlegends.github.io/fastworker-js/](https://playfriendlegends.github.io/fastworker-js/))
+- **GitHub Repository**: [https://github.com/playfriendlegends/fastworker-js](https://github.com/playfriendlegends/fastworker-js)
+
 ## The Philosophy: "Opinionated Code, Agnostic Infrastructure"
 
 `fastworker` bridges the gap between structured developer experience and flexible cloud deployment by enforcing strict coding standards while keeping your runtime options completely open:
@@ -111,4 +114,4 @@ export default {
 
 ## License
 
-MIT
+MIT © [fastworker contributors](LICENSE)

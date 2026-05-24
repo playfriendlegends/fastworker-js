@@ -2,7 +2,7 @@
 
 The official CLI scaffolding tool for `fastworker-js` projects.
 
-- **Website & Documentation**: [https://playfriendlegends.github.io/fastworker-js/](https://playfriendlegends.github.io/fastworker-js/)
+- **Website & Documentation**: [https://fastworker.dev](https://fastworker.dev) (Fallback: [https://playfriendlegends.github.io/fastworker-js/](https://playfriendlegends.github.io/fastworker-js/))
 - **GitHub Repository**: [https://github.com/playfriendlegends/fastworker-js](https://github.com/playfriendlegends/fastworker-js)
 
 ## Quick Start

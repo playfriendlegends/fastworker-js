@@ -4,7 +4,7 @@
 
 Fastworker is a platform-agnostic, stateless framework for building modular backends and microservices in JavaScript/TypeScript.
 
-- **Website & Documentation**: [https://playfriendlegends.github.io/fastworker-js/](https://playfriendlegends.github.io/fastworker-js/)
+- **Website & Documentation**: [https://fastworker.dev](https://fastworker.dev) (Fallback: [https://playfriendlegends.github.io/fastworker-js/](https://playfriendlegends.github.io/fastworker-js/))
 - **GitHub Repository**: [https://github.com/playfriendlegends/fastworker-js](https://github.com/playfriendlegends/fastworker-js)
 
 ## Features
