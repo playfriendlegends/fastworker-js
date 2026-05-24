@@ -8,17 +8,17 @@ const config: Config = {
   favicon: 'img/favicon.svg',
 
   // Set the production url of your site here
-  url: 'https://fastworker.js.org',
+  url: 'https://playfriendlegends.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/fastworker-js/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'friendlegends', // Usually your GitHub org/user name.
-  projectName: 'fastworker', // Usually your repo name.
+  organizationName: 'playfriendlegends', // Usually your GitHub org/user name.
+  projectName: 'fastworker-js', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
@@ -32,7 +32,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/friendlegends/fastworker/tree/main/packages/docs/',
+          editUrl: 'https://github.com/playfriendlegends/fastworker-js/tree/main/packages/docs/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -55,7 +55,7 @@ const config: Config = {
           label: 'Documentation',
         },
         {
-          href: 'https://github.com/friendlegends/fastworker',
+          href: 'https://github.com/playfriendlegends/fastworker-js',
           label: 'GitHub',
           position: 'right',
         },
@@ -87,7 +87,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/friendlegends/fastworker',
+              href: 'https://github.com/playfriendlegends/fastworker-js',
             },
             {
               label: 'NPM',
