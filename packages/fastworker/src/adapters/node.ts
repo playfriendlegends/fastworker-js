@@ -82,15 +82,25 @@ export function createNodeTransport(
       }
 
       // Make the RPC call via HTTP POST
-      const response = await globalThis.fetch(`${baseUrl}/__rpc`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          module: moduleName,
-          function: functionName,
-          args,
-        }),
-      });
+      let response: Response;
+      try {
+        response = await globalThis.fetch(`${baseUrl}/__rpc`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            module: moduleName,
+            function: functionName,
+            args,
+          }),
+        });
+      } catch (fetchError) {
+        throw new Error(
+          `[fastworker] RPC ${moduleName}.${functionName}() network request failed:\n` +
+          `  URL: ${baseUrl}/__rpc\n` +
+          `  Error: ${fetchError instanceof Error ? fetchError.message : String(fetchError)}\n` +
+          `  Ensure the target worker "${workerName}" is running at that URL.`
+        );
+      }
 
       if (!response.ok) {
         const errorBody = await response.text();

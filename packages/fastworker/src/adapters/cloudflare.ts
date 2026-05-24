@@ -124,15 +124,24 @@ async function invokeViaBinding(
   functionName: string,
   args: unknown[],
 ): Promise<unknown> {
-  const response = await fetchFn('http://internal/__rpc', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      module: moduleName,
-      function: functionName,
-      args,
-    }),
-  });
+  let response: Response;
+  try {
+    response = await fetchFn('http://internal/__rpc', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        module: moduleName,
+        function: functionName,
+        args,
+      }),
+    });
+  } catch (bindingError) {
+    throw new Error(
+      `[fastworker] RPC ${moduleName}.${functionName}() Service Binding invocation failed:\n` +
+      `  Error: ${bindingError instanceof Error ? bindingError.message : String(bindingError)}\n` +
+      `  Check your wrangler.toml service bindings configuration.`
+    );
+  }
 
   if (!response.ok) {
     const errorBody = await response.text();
@@ -156,15 +165,25 @@ async function invokeViaHTTP(
   functionName: string,
   args: unknown[],
 ): Promise<unknown> {
-  const response = await globalThis.fetch(`${baseUrl}/__rpc`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      module: moduleName,
-      function: functionName,
-      args,
-    }),
-  });
+  let response: Response;
+  try {
+    response = await globalThis.fetch(`${baseUrl}/__rpc`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        module: moduleName,
+        function: functionName,
+        args,
+      }),
+    });
+  } catch (fetchError) {
+    throw new Error(
+      `[fastworker] RPC ${moduleName}.${functionName}() HTTP fallback request failed:\n` +
+      `  URL: ${baseUrl}/__rpc\n` +
+      `  Error: ${fetchError instanceof Error ? fetchError.message : String(fetchError)}\n` +
+      `  Ensure the target service is reachable at that URL.`
+    );
+  }
 
   if (!response.ok) {
     const errorBody = await response.text();
