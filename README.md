@@ -1,6 +1,6 @@
 # fastworker
 
-**Platform-Agnostic Stateless Modular Monolith Framework**
+**Opinionated Code, Agnostic Infrastructure**
 
 Build modular APIs with strict file-system routing (Next.js App Router style), type-safe cross-module RPC, and flexible deployment — from a single monolith to fully isolated microservices — on Cloudflare Workers, Node.js, or any WinterCG-compatible runtime.
 
