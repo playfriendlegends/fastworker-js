@@ -4,6 +4,17 @@
 
 Build modular APIs with strict file-system routing (Next.js App Router style), type-safe cross-module RPC, and flexible deployment — from a single monolith to fully isolated microservices — on Cloudflare Workers, Node.js, or any WinterCG-compatible runtime.
 
+## The Philosophy: "Opinionated Code, Agnostic Infrastructure"
+
+`fastworker` bridges the gap between structured developer experience and flexible cloud deployment by enforcing strict coding standards while keeping your runtime options completely open:
+
+* **Opinionated Code (How you write code):**
+  * **Strict Structure:** Enforces Next.js-style file-system routing (only `api.ts` files are endpoints).
+  * **Unified Communication:** Inter-module calls must go through the built-in type-safe RPC (`ctx.call`). You write code like a modular monolith, keeping your domain logic clean and highly decoupled.
+* **Agnostic Infrastructure (How your code runs):**
+  * **Topology Agnostic:** The exact same codebase can be compiled into a single serverless worker (Monolith) or split across multiple isolated workers (Microservices). You switch between them purely via `fastworker.config.ts` without modifying your application code.
+  * **Runtime Agnostic:** Adapters allow your code to run seamlessly on Cloudflare Workers, Node.js, or any WinterCG-compliant environment.
+
 ## Key Features
 
 - **Strict File-System Routing** — Only `api.ts` files become routes. Everything else is colocated and ignored.
