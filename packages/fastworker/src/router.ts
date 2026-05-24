@@ -131,7 +131,7 @@ export function createRouter(config: RouterConfig): FetchHandler {
 
     // ── Handle RPC endpoint (microservices mode) ──
     if (pathname === '/__rpc' && method === 'POST') {
-      return handleRPCRequest(request, modules);
+      return handleRPCRequest(request, modules, env);
     }
 
     // ── Match against route manifest ──
@@ -162,7 +162,7 @@ export function createRouter(config: RouterConfig): FetchHandler {
         const response = await (handler as RouteHandler)(ctx);
         return response;
       } catch (error) {
-        return createErrorResponse(error, route.routePath, method);
+        return createErrorResponse(error, route.routePath, method, env);
       }
     }
 
@@ -234,22 +234,50 @@ function createContext(
 async function handleRPCRequest(
   request: Request,
   modules: Map<string, Record<string, unknown>>,
+  env?: Record<string, unknown>,
 ): Promise<Response> {
+  let body: Record<string, unknown>;
   try {
-    const body = (await request.json()) as {
-      module?: string;
-      function?: string;
-      args?: unknown[];
-    };
+    body = (await request.json()) as Record<string, unknown>;
+  } catch (jsonError) {
+    return new Response(
+      JSON.stringify({
+        error: 'Invalid JSON',
+        message: 'Failed to parse JSON body: ' + (jsonError instanceof Error ? jsonError.message : String(jsonError)),
+      }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
+  }
 
-    const { module: moduleName, function: functionName, args = [] } = body;
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return new Response(
+      JSON.stringify({
+        error: 'Invalid RPC request',
+        message: 'Request body must be a JSON object.',
+      }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
+  }
 
-    // Validate request
-    if (!moduleName || !functionName) {
+  const { module: moduleName, function: functionName, args = [] } = body as {
+    module?: string;
+    function?: string;
+    args?: unknown[];
+  };
+
+  try {
+    // Validate request fields
+    if (!moduleName || !functionName || typeof moduleName !== 'string' || typeof functionName !== 'string') {
       return new Response(
         JSON.stringify({
           error: 'Invalid RPC request',
-          message: 'Request body must include "module" and "function" fields.',
+          message: 'Request body must include string "module" and "function" fields.',
         }),
         {
           status: 400,
@@ -310,7 +338,7 @@ async function handleRPCRequest(
     // Invoke the function
     const result = await fn(...(Array.isArray(args) ? args : [args]));
 
-    return new Response(JSON.stringify(result), {
+    return new Response(JSON.stringify(result ?? null), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -322,11 +350,15 @@ async function handleRPCRequest(
 
     console.error('[fastworker] RPC handler error:', error);
 
+    const isProduction =
+      (typeof process !== 'undefined' && process.env?.NODE_ENV === 'production') ||
+      (env && (env.NODE_ENV === 'production' || env.ENVIRONMENT === 'production'));
+
     return new Response(
       JSON.stringify({
         error: 'RPC execution failed',
         message,
-        ...(process.env.NODE_ENV !== 'production' && stack ? { stack } : {}),
+        ...(!isProduction && stack ? { stack } : {}),
       }),
       {
         status: 500,
@@ -385,19 +417,21 @@ function createErrorResponse(
   error: unknown,
   routePath: string,
   method: string,
+  env?: Record<string, unknown>,
 ): Response {
   const message =
     error instanceof Error ? error.message : 'Internal Server Error';
 
   console.error(`[fastworker] Handler error in ${method} ${routePath}:`, error);
 
+  const isProduction =
+    (typeof process !== 'undefined' && process.env?.NODE_ENV === 'production') ||
+    (env && (env.NODE_ENV === 'production' || env.ENVIRONMENT === 'production'));
+
   return new Response(
     JSON.stringify({
       error: 'Internal Server Error',
-      message:
-        process.env.NODE_ENV === 'production'
-          ? 'An unexpected error occurred.'
-          : message,
+      message: isProduction ? 'An unexpected error occurred.' : message,
     }),
     {
       status: 500,
