@@ -30,12 +30,20 @@ Build modular APIs with strict file-system routing (Next.js App Router style), t
 
 ## Quick Start
 
-```bash
-npx create-fastworker my-app
-cd my-app
-npm install
-npm run dev
-```
+1. **Scaffold a new project:**
+   ```bash
+   npx create-fastworker my-app
+   ```
+2. **Start the local dev server (with hot reload):**
+   ```bash
+   cd my-app
+   npm install
+   npm run dev
+   ```
+3. **Build for production:**
+   ```bash
+   npm run build
+   ```
 
 ## Project Structure
 
