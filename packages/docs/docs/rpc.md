@@ -163,6 +163,17 @@ const result = await ctx.call.users.nonExistentFn();
 //   Available RPC functions: getProfile, exists, getDisplayName
 ```
 
+### Network & Binding Failures Throw Detailed Errors
+
+In microservices mode, if a remote RPC call fails due to a network connection issue or a misconfigured Cloudflare Service Binding, the framework throws a descriptive error:
+
+```text
+Error: [fastworker] RPC users.getProfile() network request failed:
+  URL: http://localhost:3001/__rpc
+  Error: fetch failed
+  Ensure the target worker "account_service" is running at that URL.
+```
+
 ## Patterns & Best Practices
 
 ### Module-Internal Reuse
