@@ -1,0 +1,19 @@
+{
+  "name": "cf-fastworker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "fastworker build",
+    "dev": "fastworker dev",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "fastworker-js": "^0.1.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "@types/node": "^22.0.0",
+    "wrangler": "^4.0.0"
+  }
+}

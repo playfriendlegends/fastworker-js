@@ -1,0 +1,619 @@
+/* --- Global Hero --- */
+.heroBanner {
+  padding: 8rem 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--ifm-color-primary); /* Bold Cloudflare Orange Background */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+/* Light mode technical grid (White translucent grid on Orange background) */
+.heroBanner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, black 50%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 90%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+[data-theme='dark'] .heroBanner {
+  background: #000000; /* Dark mode gets the pitch black hero */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Dark mode technical grid (Orange translucent grid on Black background) */
+[data-theme='dark'] .heroBanner::after {
+  background-image: 
+    linear-gradient(rgba(243, 128, 32, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 128, 32, 0.15) 1px, transparent 1px);
+}
+
+.heroTextContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+[data-theme='dark'] .badge {
+  background: rgba(243, 128, 32, 0.1);
+  border-color: rgba(243, 128, 32, 0.2);
+  color: var(--ifm-color-primary);
+}
+
+.heroTitle {
+  font-size: 4rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: #ffffff;
+  max-width: 900px;
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 800px;
+}
+
+[data-theme='dark'] .heroSubtitle {
+  color: #a1a1aa;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Fix Button Contrast in Light Mode (Orange Hero) */
+.heroBanner :global(.button--primary) {
+  background: #ffffff !important;
+  color: var(--ifm-color-primary) !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+
+.heroBanner :global(.button--primary:hover) {
+  background: #fafafa !important;
+  border-color: #fafafa !important;
+}
+
+.heroBanner :global(.button--secondary) {
+  background: transparent !important;
+  border: 2px solid rgba(255,255,255,0.8) !important;
+  color: #ffffff !important;
+}
+
+.heroBanner :global(.button--secondary:hover) {
+  border-color: #ffffff !important;
+  background: rgba(255,255,255,0.1) !important;
+}
+
+/* Install Box (NPX Command) */
+.installBox {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--ifm-color-primary);
+  height: 48px; /* Matches button--lg height */
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+
+.installBox:hover {
+  background: #fafafa;
+  border-color: #fafafa;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.installBox:active {
+  transform: translateY(0);
+}
+
+.installPrefix {
+  color: #a1a1aa;
+  margin-right: 0.75rem;
+  user-select: none;
+  font-weight: 700;
+}
+
+.installCommand {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  color: var(--ifm-color-primary) !important;
+  margin-right: 1.5rem;
+  font-weight: 700;
+}
+
+.installCopyIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ifm-color-primary);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.installCopyIcon.copied {
+  transform: scale(1.15);
+}
+
+.installCopyIcon svg {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.installBox:hover .installCopyIcon:not(.copied) {
+  color: var(--ifm-color-primary-dark);
+  transform: scale(1.1);
+}
+
+/* Dark Mode Overrides for Install Box */
+[data-theme='dark'] .installBox {
+  background: rgba(243, 128, 32, 0.1);
+  border: 2px solid rgba(243, 128, 32, 0.3);
+  color: #ffffff;
+}
+
+[data-theme='dark'] .installBox:hover {
+  background: rgba(243, 128, 32, 0.2);
+  border-color: rgba(243, 128, 32, 0.5);
+}
+
+[data-theme='dark'] .installCommand {
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .installCopyIcon {
+  color: #a1a1aa;
+}
+
+[data-theme='dark'] .installBox:hover .installCopyIcon {
+  color: #ffffff;
+}
+
+/* Revert Buttons to standard in Dark Mode (Black Hero) */
+[data-theme='dark'] .heroBanner :global(.button--primary) {
+  background: var(--ifm-color-primary) !important;
+  color: #ffffff !important;
+  border: 2px solid var(--ifm-color-primary) !important;
+}
+
+[data-theme='dark'] .heroBanner :global(.button--primary:hover) {
+  background: var(--ifm-color-primary-light) !important;
+  border-color: var(--ifm-color-primary-light) !important;
+}
+
+[data-theme='dark'] .heroBanner :global(.button--secondary) {
+  border: 2px solid rgba(255,255,255,0.2) !important;
+}
+
+/* --- Section Titles --- */
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.sectionDescription {
+  font-size: 1.1rem;
+  color: var(--ifm-color-content);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* --- Architecture Section --- */
+.architectureSection {
+  padding: 6rem 0;
+  background: var(--ifm-background-color);
+}
+
+[data-theme='dark'] .architectureSection {
+  background: var(--ifm-background-color);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.archDiagram {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.archBox {
+  background: #ffffff;
+  border: 2px solid var(--ifm-color-emphasis-300);
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+[data-theme='dark'] .archBox {
+  background: #000000;
+  color: #fff;
+}
+
+.archSplit {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.archBoxMini {
+  background: rgba(243, 128, 32, 0.1);
+  border: 1px solid var(--ifm-color-primary);
+  color: var(--ifm-color-primary-dark);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+[data-theme='dark'] .archBoxMini {
+  background: #000000;
+  color: var(--ifm-color-primary);
+}
+
+.archArrow {
+  color: var(--ifm-color-emphasis-400);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.archBoxMain {
+  background: var(--ifm-color-primary);
+  color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+/* --- RPC Section --- */
+.rpcSection {
+  padding: 6rem 0;
+  background: var(--ifm-background-color); /* Removed grey surface color */
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.rpcDesc {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.codeWindow {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.1);
+  height: 100%;
+}
+
+[data-theme='dark'] .codeWindow {
+  background: #000000;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+.codeWindowPrimary {
+  border: 2px solid var(--ifm-color-primary);
+  box-shadow: 0 20px 40px rgba(243, 128, 32, 0.2);
+}
+
+.codeHeader, .codeHeaderPrimary {
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #f4f4f5;
+  color: #52525b;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+[data-theme='dark'] .codeHeader, [data-theme='dark'] .codeHeaderPrimary {
+  background: #000000;
+  color: #888;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.codeHeaderPrimary {
+  background: var(--ifm-color-primary);
+  color: #ffffff;
+  border-bottom: none;
+}
+
+.codeBlockOverride {
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+}
+
+[data-theme='dark'] .codeBlockOverride {
+  background: #000000 !important;
+}
+
+.codeBlockOverride pre {
+  margin: 0;
+  border-radius: 0;
+  background: transparent !important;
+}
+
+/* --- Features Grid --- */
+.featuresSection {
+  padding: 8rem 0;
+  background: var(--ifm-background-color);
+}
+
+.featureCard {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: all 0.2s ease;
+  height: 100%;
+  margin-bottom: 2rem;
+}
+
+[data-theme='dark'] .featureCard {
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.featureIcon {
+  color: var(--ifm-color-primary);
+  margin-bottom: 1.5rem;
+}
+
+.featureCard h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.featureCard p {
+  color: var(--ifm-color-content);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+/* --- CTA Section --- */
+.ctaSection {
+  padding: 8rem 0;
+  background: var(--ifm-background-color);
+}
+
+.ctaCard {
+  background: var(--ifm-color-primary);
+  border-radius: 24px;
+  padding: 6rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(243, 128, 32, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] .ctaCard {
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Beautiful Glowing Grid Background for CTA */
+.ctaCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+[data-theme='dark'] .ctaCard::after {
+  background-image: 
+    linear-gradient(rgba(243, 128, 32, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 128, 32, 0.15) 1px, transparent 1px);
+}
+
+.ctaContent {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
+.ctaSubtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  margin-bottom: 3rem;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+.ctaButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.ctaCard :global(.button--primary) {
+  background: #ffffff !important;
+  color: var(--ifm-color-primary) !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+
+[data-theme='dark'] .ctaCard :global(.button--primary) {
+  background: var(--ifm-color-primary) !important;
+  color: #ffffff !important;
+  border-color: var(--ifm-color-primary) !important;
+}
+
+.ctaInstallBox {
+  margin: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.ctaInstallBox:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: #ffffff;
+}
+
+.ctaInstallBox .installPrefix {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ctaInstallBox .installCommand {
+  color: #ffffff !important;
+}
+
+.ctaInstallBox .installCopyIcon {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .ctaInstallBox {
+  background: #1a1a1a;
+  border-color: #333333;
+}
+
+[data-theme='dark'] .ctaInstallBox:hover {
+  background: #222222;
+  border-color: #555555;
+}
+
+/* --- Mobile Responsiveness --- */
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 4rem 1rem;
+  }
+  
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .buttons, .ctaButtons {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .buttons > *, .ctaButtons > * {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .installBox, .ctaInstallBox {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .installCommand {
+    margin-right: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .sectionDescription {
+    text-align: center;
+  }
+
+  .architectureSection, .rpcSection, .featuresSection, .ctaSection {
+    padding: 4rem 1rem;
+  }
+
+  .archSplit {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .codeWindow {
+    margin-bottom: 2rem;
+  }
+
+  .ctaCard {
+    padding: 3rem 1.5rem;
+    border-radius: 16px;
+  }
+
+  .ctaTitle {
+    font-size: 2rem;
+  }
+
+  .ctaSubtitle {
+    font-size: 1.1rem;
+  }
+}
