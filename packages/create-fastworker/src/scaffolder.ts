@@ -124,7 +124,7 @@ function genPackageJson(opts: ScaffoldOptions): string {
       ...(opts.language === 'typescript' ? { typecheck: 'tsc --noEmit' } : {}),
     },
     dependencies: {
-      'fastworker-js': '^0.1.3',
+      'fastworker-js': '^0.1.4',
     },
     devDependencies: Object.keys(devDeps).length > 0 ? devDeps : undefined,
   };
