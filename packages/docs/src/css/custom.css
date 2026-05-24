@@ -76,7 +76,7 @@ html[data-theme='dark'] p > code, html[data-theme='dark'] li > code {
 }
 
 /* Apply backdrop-filter only when mobile sidebar is NOT open to prevent fixed positioning bug */
-html:not(.navbar-sidebar--show) .navbar {
+.navbar:not(.navbar-sidebar--show) {
   backdrop-filter: blur(12px);
 }
 
