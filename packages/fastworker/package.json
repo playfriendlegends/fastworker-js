@@ -1,6 +1,6 @@
 {
   "name": "fastworker-js",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Platform-agnostic stateless modular monolith framework — types, compiler, router, RPC",
   "type": "module",
   "main": "./dist/index.js",
