@@ -137,11 +137,16 @@ The entire `ctx` object is **frozen** (`Object.freeze`) — it cannot be mutated
 Every handler must return a standard Web API `Response` (or a `Promise<Response>`):
 
 ```typescript
-// ✅ Correct — returns Response
+// ✅ Correct — returns Response manually
 export async function GET(ctx: FastworkerContext) {
   return new Response(JSON.stringify({ ok: true }), {
     headers: { 'Content-Type': 'application/json' },
   });
+}
+
+// ✅ Correct & Recommended — standard Response.json() helper
+export async function GET(ctx: FastworkerContext) {
+  return Response.json({ ok: true });
 }
 
 // ✅ Also correct — sync return

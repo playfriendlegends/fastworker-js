@@ -156,12 +156,13 @@ if (!data.success) {
               <div className={styles.codeHeaderPrimary}>The Fastworker Way (Type-Safe)</div>
               <CodeBlock language="typescript" className={styles.codeBlockOverride}>
 {`import type { FastworkerContext } from 'fastworker-js';
+import type { Modules } from '../../types.js'; // From project root
 
-export async function POST(ctx: FastworkerContext) {
+export async function POST(ctx: FastworkerContext<Modules>) {
   const { userId, amount } = await ctx.req.json();
 
   // Fully typed RPC. Jumps the network boundary safely.
-  const billingRes = await ctx.call('billing', 'charge', { 
+  const billingRes = await ctx.call.billing.charge({ 
     userId, 
     amount 
   });
