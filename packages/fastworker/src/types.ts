@@ -122,12 +122,14 @@ export type RouteHandler<TModules = Record<string, unknown>> = (
 export type RPCProxy<TModule> = {
   [K in keyof TModule as K extends HttpMethod
     ? never  // Filter out HTTP method handlers
-    : TModule[K] extends (...args: never[]) => unknown
+    : TModule[K] extends (...args: any[]) => unknown
       ? K       // Keep only function exports
       : never   // Filter out non-function exports
-  ]: TModule[K] extends (...args: infer A) => infer R
+  ]: TModule[K] extends (ctx: any, ...args: infer A) => infer R
     ? (...args: A) => R extends Promise<unknown> ? R : Promise<R>
-    : never;
+    : TModule[K] extends (...args: infer A) => infer R
+      ? (...args: A) => R extends Promise<unknown> ? R : Promise<R>
+      : never;
 };
 
 /**

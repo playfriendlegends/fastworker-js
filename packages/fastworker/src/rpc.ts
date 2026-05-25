@@ -53,6 +53,7 @@ import { HTTP_METHODS } from './types.js';
  */
 export function createLocalRPCClient(
   modules: Map<string, Record<string, unknown>>,
+  getCtx: () => any,
 ): unknown {
   // Level-1 Proxy: intercepts module name (e.g., ctx.call.users)
   return new Proxy(Object.create(null), {
@@ -69,7 +70,7 @@ export function createLocalRPCClient(
       }
 
       // Level-2 Proxy: intercepts function name (e.g., ctx.call.users.getProfile)
-      return createModuleProxy(moduleName, mod);
+      return createModuleProxy(moduleName, mod, getCtx);
     },
   });
 }
@@ -135,6 +136,7 @@ export function createRemoteRPCClient(transport: RPCTransport): unknown {
 function createModuleProxy(
   moduleName: string,
   mod: Record<string, unknown>,
+  getCtx: () => any,
 ): unknown {
   return new Proxy(Object.create(null), {
     get(_target, functionName: string) {
@@ -177,7 +179,8 @@ function createModuleProxy(
 
       // Wrap in async to ensure consistent Promise return type
       return async (...args: unknown[]) => {
-        return fn(...args);
+        const ctx = getCtx();
+        return fn(ctx, ...args);
       };
     },
   });

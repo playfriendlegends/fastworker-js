@@ -192,10 +192,13 @@ function createContext(
 ): FastworkerContext {
   // Determine the RPC client based on available transport
   let rpcClient: unknown;
+  let ctx: FastworkerContext;
+
+  const getCtx = () => ctx;
 
   if (!transport) {
     // Monolith mode: direct local function calls
-    rpcClient = createLocalRPCClient(modules);
+    rpcClient = createLocalRPCClient(modules, getCtx);
   } else if (typeof transport === 'function') {
     // Factory mode: create transport with current env (e.g., CF Service Bindings)
     rpcClient = createRemoteRPCClient(transport(env));
@@ -204,12 +207,14 @@ function createContext(
     rpcClient = createRemoteRPCClient(transport);
   }
 
-  return Object.freeze({
+  ctx = Object.freeze({
     req: request,
     params: Object.freeze(params),
     env,
     call: rpcClient as FastworkerContext['call'],
   });
+
+  return ctx;
 }
 
 // ─── RPC Request Handler ──────────────────────────────────────────────────────
@@ -335,8 +340,11 @@ async function handleRPCRequest(
       );
     }
 
-    // Invoke the function
-    const result = await fn(...(Array.isArray(args) ? args : [args]));
+    // Build a context for the RPC call
+    const ctx = createContext(request, {}, env || {}, modules);
+
+    // Invoke the function with context as the first argument
+    const result = await fn(ctx, ...(Array.isArray(args) ? args : [args]));
 
     return new Response(JSON.stringify(result ?? null), {
       status: 200,

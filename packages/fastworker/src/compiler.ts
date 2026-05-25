@@ -392,10 +392,13 @@ export function generateRouteManifest(
     // e.g., 'users/[id]/api.ts' → 'users', 'billing/api.ts' → 'billing'
     const topLevelModule = entry.modulePath.split(path.sep)[0].split('/')[0];
     const varName = moduleVarNames.get(entry.modulePath)!;
+    const normalizedPath = entry.modulePath.replace(/\\/g, '/');
+    const parts = normalizedPath.split('/');
+    const isTopLevelApi = parts.length === 2 && parts[1].startsWith('api');
 
-    // Only map the top-level api.ts (not nested dynamic routes)
-    // The RPC system routes by module name, not by sub-routes
-    if (!entry.modulePath.includes('[') && !moduleMapEntries.has(topLevelModule)) {
+    if (isTopLevelApi) {
+      moduleMapEntries.set(topLevelModule, varName);
+    } else if (!moduleMapEntries.has(topLevelModule) && !entry.modulePath.includes('[')) {
       moduleMapEntries.set(topLevelModule, varName);
     }
   }
