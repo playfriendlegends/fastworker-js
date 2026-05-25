@@ -1,6 +1,6 @@
 {
   "name": "create-fastworker",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "CLI scaffolding tool for fastworker projects",
   "type": "module",
   "main": "./dist/index.js",
