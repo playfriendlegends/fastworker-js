@@ -5,8 +5,7 @@
   "description": "fastworker — Platform-Agnostic Stateless Modular Monolith Framework",
   "workspaces": [
     "packages/*",
-    "examples/*",
-    "examples/prod/*"
+    "examples/*"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
