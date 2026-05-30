@@ -71,7 +71,7 @@ function HeroSection() {
     <header className={styles.heroBanner}>
       <div className="container">
         <div className={styles.heroTextContainer}>
-          <div className={styles.badge}>v0.1.8 Released</div>
+          <div className={styles.badge}>v0.1.9 Released</div>
           <Heading as="h1" className={styles.heroTitle}>
             The ultimate serverless framework for Cloud Backend JS Workers.
           </Heading>

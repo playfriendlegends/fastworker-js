@@ -167,7 +167,7 @@ export function createRouter(config: RouterConfig): FetchHandler {
     }
 
     // ── No route matched ──
-    return createNotFoundResponse(pathname);
+    return createNotFoundResponse(pathname, env);
   };
 }
 
@@ -381,13 +381,22 @@ async function handleRPCRequest(
 /**
  * Create a 404 Not Found response with helpful debugging info.
  */
-function createNotFoundResponse(pathname: string): Response {
+function createNotFoundResponse(pathname: string, env?: Record<string, unknown>): Response {
+  const isProduction =
+    (typeof process !== 'undefined' && process.env?.NODE_ENV === 'production') ||
+    (env && (env.NODE_ENV === 'production' || env.ENVIRONMENT === 'production'));
+
+  const responseBody: Record<string, string> = {
+    error: 'Not Found',
+    message: `No route matches "${pathname}".`,
+  };
+
+  if (!isProduction) {
+    responseBody.hint = 'Ensure you have an api.ts file in the corresponding modules/ directory. (Note: this hint is only shown in development mode)';
+  }
+
   return new Response(
-    JSON.stringify({
-      error: 'Not Found',
-      message: `No route matches "${pathname}".`,
-      hint: 'Ensure you have an api.ts file in the corresponding modules/ directory.',
-    }),
+    JSON.stringify(responseBody),
     {
       status: 404,
       headers: { 'Content-Type': 'application/json' },
